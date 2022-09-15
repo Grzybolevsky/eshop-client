@@ -5,11 +5,9 @@ on:
   pull_request:
     branches: [ master ]
 
-env:
-
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: 'ubuntu-latest'
     steps:
       - name: Checkout code
         uses: actions/checkout@v3.0.2
@@ -18,3 +16,35 @@ jobs:
         with:
           node-version: latest
           cache: 'pnpm'
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build
+    environment:
+      name: 'production'
+      url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
+
+    steps:
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2.2.3
+      - name: Log in to registry
+        uses: docker/login-action@v2
+        with:
+          registry: https://index.docker.io/v1/
+          username: ${{ secrets.AzureAppService_ContainerUsername }}
+          password: ${{ secrets.AzureAppService_ContainerPassword }}
+
+      - name: Build and push container image to registry
+        uses: docker/build-push-action@v3.1.1
+        with:
+          push: true
+          tags: ${{ secrets.AzureAppService_ContainerUsername }}/eshop-client:${{ github.sha }}
+          file: ./Dockerfile
+      - name: Deploy to Azure Web App
+        id: deploy-to-webapp
+        uses: azure/webapps-deploy@v2.2.3
+        with:
+          app-name: 'eshop-client'
+          slot-name: 'production'
+          publish-profile: ${{ secrets.AzureAppService_PublishProfile }}
+          images: '${{ secrets.AzureAppService_ContainerUsername }}/eshop-client:${{ github.sha }}'
