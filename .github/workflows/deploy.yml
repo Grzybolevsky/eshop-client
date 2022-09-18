@@ -23,6 +23,9 @@ jobs:
           cache: 'pnpm'
       - name: pnpm install
         uses: Jaid/action-npm-install@v1.2.4
+      - name: test
+        run: |
+          ls -la
       - name: build
         run: |
           pnpm run build
