@@ -21,14 +21,12 @@ jobs:
         with:
           node-version: latest
           cache: 'pnpm'
-      - name: pnpm install
-        uses: Jaid/action-npm-install@v1.2.4
+      - name: install
+        run: |
+          pnpm install
       - name: build
         run: |
           pnpm run build
-      - name: test
-        run: |
-          ls -la
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
       - name: Log in to registry
@@ -41,6 +39,7 @@ jobs:
       - name: Build and push container image to registry
         uses: docker/build-push-action@v3.1.1
         with:
+          context: .
           push: true
           tags: ${{ secrets.AzureAppService_ContainerUsername_841e72f9c5aa45589a667e5e6f69fdf9 }}/eshop-client:${{ github.sha }}
           file: ./Dockerfile
