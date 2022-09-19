@@ -3,11 +3,28 @@ import ReactDOM from "react-dom/client";
 import "./index.css";
 import App from "./App/App";
 import reportWebVitals from "./reportWebVitals";
+import { DevSupport } from "@react-buddy/ide-toolbox";
+import { ComponentPreviews, useInitial } from "./dev";
+import { BrowserRouter } from "react-router-dom";
+import { createTheme, ThemeProvider } from "@mui/material";
 
+const theme = createTheme({
+  components: {
+    MuiListItemButton: {
+      styleOverrides: { root: { "&.Mui-selected": { backgroundColor: "rgb(0,0,0,0.2)" } } },
+    },
+  },
+});
 const root = ReactDOM.createRoot(document.getElementById("root") as HTMLElement);
 root.render(
   <React.StrictMode>
-    <App />
+    <BrowserRouter basename={process.env.PUBLIC_URL}>
+      <DevSupport ComponentPreviews={ComponentPreviews} useInitialHook={useInitial}>
+        <ThemeProvider theme={theme}>
+          <App />
+        </ThemeProvider>
+      </DevSupport>
+    </BrowserRouter>
   </React.StrictMode>,
 );
 

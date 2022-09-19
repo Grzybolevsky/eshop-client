@@ -10,6 +10,9 @@
 [![Vulnerabilities](https://sonarcloud.io/api/project_badges/measure?project=Grzybolevsky_eshop-client&metric=vulnerabilities)](https://sonarcloud.io/dashboard?id=Grzybolevsky_eshop-client)
 
 ## E-business final project - e-shop client
+
 ### Service is available [here](https://eshop-client.azurewebsites.net/)
+
 ### Link: https://eshop-client.azurewebsites.net/
+
 ### [Dockerhub](https://hub.docker.com/repository/docker/grzybolevsky/eshop-client)

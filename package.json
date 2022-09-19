@@ -18,7 +18,9 @@
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.4.0",
     "react-scripts": "^5.1.0-next.14",
-    "web-vitals": "^3.0.2"
+    "web-vitals": "^3.0.2",
+    "@react-buddy/ide-toolbox": "^2.2.1",
+    "@react-buddy/palette-mui": "^1.2.2"
   },
   "devDependencies": {
     "@types/jest": "^29.0.3",
