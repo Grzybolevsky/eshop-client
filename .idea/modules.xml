@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/eshop-client.iml" filepath="$PROJECT_DIR$/.idea/eshop-client.iml" />
+      <module fileurl="file://$USER_HOME$/WebstormProjects/nba_frontend/.idea/nba_frontend.iml" filepath="$USER_HOME$/WebstormProjects/nba_frontend/.idea/nba_frontend.iml" />
     </modules>
   </component>
 </project>
