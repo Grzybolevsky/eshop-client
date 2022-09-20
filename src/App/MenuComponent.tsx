@@ -5,7 +5,7 @@ import { useCookies } from "react-cookie";
 import { useState } from "react";
 
 export default function MenuComponent() {
-  const [cookies] = useCookies(["user_session"]);
+  const [cookies] = useCookies(["JSESSIONID"]);
   const [selected, setSelected] = useState(1);
   return (
     <AppBar position={"sticky"}>
@@ -39,7 +39,7 @@ export default function MenuComponent() {
           selected={selected === 2}
           onClick={() => setSelected(2)}
           component={Link}
-          disabled={!cookies.user_session}
+          disabled={!cookies.JSESSIONID}
           to={"/basket"}>
           <ListItemIcon>
             <ShoppingBasket />
@@ -49,7 +49,7 @@ export default function MenuComponent() {
         <ListItemButton
           selected={selected === 4}
           onClick={() => setSelected(4)}
-          disabled={!cookies.user_session}
+          disabled={!cookies.JSESSIONID}
           component={Link}
           to={"/orders"}>
           <ListItemIcon>
@@ -57,7 +57,7 @@ export default function MenuComponent() {
           </ListItemIcon>
           <ListItemText primary={"Zamówienia"} />
         </ListItemButton>
-        {cookies.user_session ? (
+        {cookies.JSESSIONID ? (
           <ListItemButton
             selected={selected === 5}
             onClick={() => setSelected(5)}
