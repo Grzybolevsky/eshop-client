@@ -7,9 +7,11 @@ import axios from "axios";
 export default function MenuComponent() {
   const [logged, setLogged] = useState(false);
   const [selected, setSelected] = useState(1);
-  axios.get("https://ebusiness-eshop-api.azurewebsites.net/user/logged").then((response) => {
-    setLogged(response.data);
-  })
+  axios
+    .get("https://ebusiness-eshop-api.azurewebsites.net/user/logged", { withCredentials: true })
+    .then((response) => {
+      setLogged(response.data);
+    });
   return (
     <AppBar position={"sticky"}>
       <Toolbar
