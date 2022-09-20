@@ -9,7 +9,7 @@ export default function OrdersPage() {
   const [error, setError] = useState(null);
   useEffect(() => {
     setIsLoading(true);
-    axios.get(`${process.env.API_URL}/orders`).then(
+    axios.get(`${process.env.REACT_APP_API_URL}/orders`).then(
       (response) => {
         setOrders(response.data);
         setIsLoading(false);

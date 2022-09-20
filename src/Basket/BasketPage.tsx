@@ -9,7 +9,7 @@ export default function BasketPage() {
   const [error, setError] = useState(null);
   useEffect(() => {
     setIsLoading(true);
-    axios.get(`${process.env.API_URL}/basket`).then(
+    axios.get(`${process.env.REACT_APP_API_URL}/basket`).then(
       (response) => {
         setBasketProducts(response.data);
         setIsLoading(false);

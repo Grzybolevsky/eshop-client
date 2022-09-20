@@ -8,7 +8,7 @@ export default function MenuComponent() {
   const [logged, setLogged] = useState(false);
   const [selected, setSelected] = useState(1);
   axios
-    .get(`${process.env.API_URL}/user/logged`, { withCredentials: true })
+    .get(`${process.env.REACT_APP_API_URL}/user/logged`, { withCredentials: true })
     .then((response) => {
       setLogged(response.data);
     });
@@ -66,7 +66,7 @@ export default function MenuComponent() {
           <ListItemButton
             selected={selected === 5}
             onClick={() => setSelected(5)}
-            href={"${process.env.API_URL}/auth/logout"}>
+            href={`${process.env.REACT_APP_API_URL}/auth/logout`}>
             <ListItemIcon>
               <Logout />
             </ListItemIcon>
@@ -76,7 +76,7 @@ export default function MenuComponent() {
           <ListItemButton
             selected={selected === 5}
             onClick={() => setSelected(5)}
-            href={"${process.env.API_URL}/login"}>
+            href={`${process.env.REACT_APP_API_URL}/login`}>
             <ListItemIcon>
               <Login />
             </ListItemIcon>

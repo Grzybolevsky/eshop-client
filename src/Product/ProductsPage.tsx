@@ -9,7 +9,7 @@ export default function ProductsPage() {
   const [error, setError] = useState(null);
   useEffect(() => {
     setIsLoading(true);
-    axios.get(`${process.env.API_URL}/products`).then(
+    axios.get(`${process.env.REACT_APP_API_URL}/products`).then(
       (response) => {
         setProducts(response.data);
         setIsLoading(false);
