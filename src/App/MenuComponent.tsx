@@ -1,12 +1,15 @@
 import { AppBar, ListItemButton, ListItemIcon, ListItemText, Toolbar } from "@mui/material";
 import { Home, LocalShipping, Login, Logout, ShoppingBasket, Store } from "@mui/icons-material";
 import { Link } from "react-router-dom";
-import { useCookies } from "react-cookie";
 import { useState } from "react";
+import axios from "axios";
 
 export default function MenuComponent() {
-  const [cookies] = useCookies(["JSESSIONID"]);
+  const [logged, setLogged] = useState(false);
   const [selected, setSelected] = useState(1);
+  axios.get("https://ebusiness-eshop-api.azurewebsites.net/user/logged").then((response) => {
+    setLogged(response.data);
+  })
   return (
     <AppBar position={"sticky"}>
       <Toolbar
@@ -39,7 +42,7 @@ export default function MenuComponent() {
           selected={selected === 2}
           onClick={() => setSelected(2)}
           component={Link}
-          disabled={!cookies.JSESSIONID}
+          disabled={!logged}
           to={"/basket"}>
           <ListItemIcon>
             <ShoppingBasket />
@@ -49,7 +52,7 @@ export default function MenuComponent() {
         <ListItemButton
           selected={selected === 4}
           onClick={() => setSelected(4)}
-          disabled={!cookies.JSESSIONID}
+          disabled={!logged}
           component={Link}
           to={"/orders"}>
           <ListItemIcon>
@@ -57,12 +60,11 @@ export default function MenuComponent() {
           </ListItemIcon>
           <ListItemText primary={"Zamówienia"} />
         </ListItemButton>
-        {cookies.JSESSIONID ? (
+        {logged ? (
           <ListItemButton
             selected={selected === 5}
             onClick={() => setSelected(5)}
-            component={Link}
-            to={"/logout"}>
+            href={"https://ebusiness-eshop-api.azurewebsites.net/auth/logout"}>
             <ListItemIcon>
               <Logout />
             </ListItemIcon>
@@ -72,8 +74,7 @@ export default function MenuComponent() {
           <ListItemButton
             selected={selected === 5}
             onClick={() => setSelected(5)}
-            component={Link}
-            to={"/login"}>
+            href={"https://ebusiness-eshop-api.azurewebsites.net/login"}>
             <ListItemIcon>
               <Login />
             </ListItemIcon>
