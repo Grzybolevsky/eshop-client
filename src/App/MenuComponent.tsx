@@ -3,12 +3,21 @@ import { Home, LocalShipping, Login, Logout, ShoppingBasket, Store } from "@mui/
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import axios from "axios";
+import { useCookies } from "react-cookie";
 
 export default function MenuComponent() {
   const [logged, setLogged] = useState(false);
   const [selected, setSelected] = useState(1);
+  const [cookies] = useCookies(["JSESSIONID"]);
   axios
-    .get(`${process.env.REACT_APP_API_URL}/user/logged`, { withCredentials: true })
+    .get(`${process.env.REACT_APP_API_URL}/user/logged`, {
+      headers: {
+        "Access-Control-Allow-Origin": "*",
+        "Content-Type": "application/json",
+        "JSESSIONID": cookies.JSESSIONID
+      },
+      withCredentials: true,
+    })
     .then((response) => {
       setLogged(response.data);
     });

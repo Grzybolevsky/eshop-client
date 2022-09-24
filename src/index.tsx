@@ -7,6 +7,7 @@ import { DevSupport } from "@react-buddy/ide-toolbox";
 import { ComponentPreviews, useInitial } from "./dev";
 import { BrowserRouter } from "react-router-dom";
 import { createTheme, ThemeProvider } from "@mui/material";
+import { CookiesProvider } from "react-cookie";
 
 const theme = createTheme({
   components: {
@@ -18,13 +19,15 @@ const theme = createTheme({
 const root = ReactDOM.createRoot(document.getElementById("root") as HTMLElement);
 root.render(
   <React.StrictMode>
-    <BrowserRouter basename={process.env.PUBLIC_URL}>
-      <DevSupport ComponentPreviews={ComponentPreviews} useInitialHook={useInitial}>
-        <ThemeProvider theme={theme}>
-          <App />
-        </ThemeProvider>
-      </DevSupport>
-    </BrowserRouter>
+    <CookiesProvider>
+      <BrowserRouter basename={process.env.PUBLIC_URL}>
+        <DevSupport ComponentPreviews={ComponentPreviews} useInitialHook={useInitial}>
+          <ThemeProvider theme={theme}>
+            <App />
+          </ThemeProvider>
+        </DevSupport>
+      </BrowserRouter>
+    </CookiesProvider>
   </React.StrictMode>,
 );
 
