@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import Order from "./Order";
-import { Table, TableBody, TableCell, TableHead, TableRow } from "@mui/material";
+import { Button, Table, TableBody, TableCell, TableHead, TableRow } from "@mui/material";
 import { apiCall } from "../axiosConfig";
+import { Payment } from "@mui/icons-material";
 
 export default function OrdersPage() {
   const [orders, setOrders] = useState<Order[]>([]);
@@ -20,26 +21,33 @@ export default function OrdersPage() {
   return (
     <>
       <h2>Zamówienia</h2>
-      {isLoading
-        ? "Loading..."
-        : !error && (
-            <Table>
-              <TableHead>
-                <TableRow>
-                  <TableCell>Id zamówienia</TableCell>
-                  <TableCell>Data zamówienia</TableCell>
+
+      <Table>
+        <TableHead>
+          <TableRow>
+            <TableCell>Id zamówienia</TableCell>
+            <TableCell>Data zamówienia</TableCell>
+            <TableCell>Opłać</TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {" "}
+          {isLoading
+            ? "Loading..."
+            : !error &&
+              orders.map((order) => (
+                <TableRow key={order.id}>
+                  <TableCell>{order.id}</TableCell>
+                  <TableCell>{order.createdAt.toString()}</TableCell>
+                  <TableCell>
+                    <Button disabled={order.isPaid}>
+                      <Payment />
+                    </Button>
+                  </TableCell>
                 </TableRow>
-              </TableHead>
-              <TableBody>
-                {orders.map((order) => (
-                  <TableRow key={order.id}>
-                    <TableCell>{order.id}</TableCell>
-                    <TableCell>{order.createdAt.toString()}</TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          )}
+              ))}
+        </TableBody>
+      </Table>
     </>
   );
 }

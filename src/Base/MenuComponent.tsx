@@ -2,14 +2,14 @@ import { AppBar, ListItemButton, ListItemIcon, ListItemText, Toolbar } from "@mu
 import { Home, LocalShipping, Login, Logout, ShoppingBasket, Store } from "@mui/icons-material";
 import { Link } from "react-router-dom";
 import { useState } from "react";
-import { apiCall } from "../axiosConfig";
 
-export default function MenuComponent() {
-  const [logged, setLogged] = useState(false);
+interface MenuProps {
+  logged: boolean
+}
+
+export default function MenuComponent(props: MenuProps) {
+  const { logged } = props
   const [selected, setSelected] = useState(1);
-  apiCall.get("/user/logged").then((response) => {
-    setLogged(response.data);
-  });
   return (
     <AppBar position={"sticky"}>
       <Toolbar
