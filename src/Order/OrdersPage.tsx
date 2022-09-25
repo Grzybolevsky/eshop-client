@@ -15,7 +15,10 @@ export default function OrdersPage() {
         setOrders(response.data);
         setIsLoading(false);
       },
-      (err) => setError(err),
+      (err) => {
+        setError(err);
+        setIsLoading(false);
+      },
     );
   }, []);
   return (

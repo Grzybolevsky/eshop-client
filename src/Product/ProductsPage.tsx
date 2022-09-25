@@ -1,13 +1,13 @@
 import {
-  Table,
-  TableRow,
-  TableHead,
-  TableCell,
-  TableBody,
+  Button,
   Dialog,
   DialogTitle,
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableRow,
   TextField,
-  Button,
 } from "@mui/material";
 import Product from "./Product";
 import { ChangeEvent, useEffect, useState } from "react";
@@ -43,7 +43,6 @@ export default function ProductsPage() {
   const addItem = () => {
     setOpen(false);
     apiCall.post("/products", newProduct).then((res) => setProducts([...products, res.data]));
-    console.log(newProduct);
   };
 
   useEffect(() => {
@@ -101,6 +100,7 @@ export default function ProductsPage() {
           variant="standard"
           name="price"
           type="number"
+          InputProps={{ inputProps: { min: 0 } }}
           onChange={handleChange}
         />
         <TextField

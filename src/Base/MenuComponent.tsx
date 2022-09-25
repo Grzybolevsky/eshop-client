@@ -4,11 +4,11 @@ import { Link } from "react-router-dom";
 import { useState } from "react";
 
 interface MenuProps {
-  logged: boolean
+  logged: boolean;
 }
 
 export default function MenuComponent(props: MenuProps) {
-  const { logged } = props
+  const { logged } = props;
   const [selected, setSelected] = useState(1);
   return (
     <AppBar position={"sticky"}>
@@ -74,7 +74,8 @@ export default function MenuComponent(props: MenuProps) {
           <ListItemButton
             selected={selected === 5}
             onClick={() => setSelected(5)}
-            href={`${process.env.REACT_APP_API_URL}/login`}>
+            component={Link}
+            to={"/login"}>
             <ListItemIcon>
               <Login />
             </ListItemIcon>

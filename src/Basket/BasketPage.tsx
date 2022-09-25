@@ -15,7 +15,10 @@ export default function BasketPage() {
         setBasketProducts(response.data);
         setIsLoading(false);
       },
-      (err) => setError(err),
+      (err) => {
+        setError(err);
+        setIsLoading(false);
+      },
     );
   }, []);
 
@@ -30,8 +33,7 @@ export default function BasketPage() {
   }
 
   function placeOrder() {
-    apiCall.post("/orders").then((res) => {
-      console.log(res);
+    apiCall.post("/orders").then(() => {
       setBasketProducts([]);
     });
   }
@@ -40,9 +42,16 @@ export default function BasketPage() {
     e: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>,
     basketProduct: BasketProduct,
   ) => {
-    const { value } = e.target;
-    basketProduct.quantity = Number(value);
-    setBasketProducts(basketProducts);
+    setBasketProducts(
+      basketProducts.map((product) => {
+        if (product.id == basketProduct.id) {
+          product.quantity = Number(e.target.value);
+          product.totalPrice = product.quantity * product.product.price;
+          apiCall.put("/basket", product).then((res) => res.data);
+        }
+        return product;
+      }),
+    );
   };
 
   return (
@@ -70,10 +79,11 @@ export default function BasketPage() {
                   <TableCell>
                     <TextField
                       id="standard-basic"
-                      label="Cena"
+                      label="Liczba"
                       variant="standard"
-                      name="price"
+                      name="quantity"
                       type="number"
+                      InputProps={{ inputProps: { min: 1 } }}
                       onChange={(e) => handleChange(e, basketProduct)}
                       value={basketProduct.quantity}
                     />
