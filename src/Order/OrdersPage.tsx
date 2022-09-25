@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import Order from "./Order";
-import axios from "axios";
 import { Table, TableBody, TableCell, TableHead, TableRow } from "@mui/material";
+import { apiCall } from "../axiosConfig";
 
 export default function OrdersPage() {
   const [orders, setOrders] = useState<Order[]>([]);
@@ -9,7 +9,7 @@ export default function OrdersPage() {
   const [error, setError] = useState(null);
   useEffect(() => {
     setIsLoading(true);
-    axios.get(`${process.env.REACT_APP_API_URL}/orders`).then(
+    apiCall.get("/orders").then(
       (response) => {
         setOrders(response.data);
         setIsLoading(false);
@@ -20,26 +20,26 @@ export default function OrdersPage() {
   return (
     <>
       <h2>Zamówienia</h2>
-        {isLoading
-          ? "Loading..."
-          : !error && (
-          <Table>
-            <TableHead>
-              <TableRow>
-                <TableCell>Id zamówienia</TableCell>
-                <TableCell>Data zamówienia</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {orders.map((order) => (
-                <TableRow key={order.id}>
-                  <TableCell>{order.id}</TableCell>
-                  <TableCell>{order.createdAt.toString()}</TableCell>
+      {isLoading
+        ? "Loading..."
+        : !error && (
+            <Table>
+              <TableHead>
+                <TableRow>
+                  <TableCell>Id zamówienia</TableCell>
+                  <TableCell>Data zamówienia</TableCell>
                 </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        )}
+              </TableHead>
+              <TableBody>
+                {orders.map((order) => (
+                  <TableRow key={order.id}>
+                    <TableCell>{order.id}</TableCell>
+                    <TableCell>{order.createdAt.toString()}</TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          )}
     </>
   );
 }

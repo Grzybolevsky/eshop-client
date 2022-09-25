@@ -1,7 +1,7 @@
 import { Table, TableRow, TableHead, TableCell, TableBody } from "@mui/material";
 import Product from "./Product";
 import { useEffect, useState } from "react";
-import axios from "axios";
+import { apiCall } from "../axiosConfig";
 
 export default function ProductsPage() {
   const [products, setProducts] = useState<Product[]>([]);
@@ -9,7 +9,7 @@ export default function ProductsPage() {
   const [error, setError] = useState(null);
   useEffect(() => {
     setIsLoading(true);
-    axios.get(`${process.env.REACT_APP_API_URL}/products`).then(
+    apiCall.get("/products").then(
       (response) => {
         setProducts(response.data);
         setIsLoading(false);

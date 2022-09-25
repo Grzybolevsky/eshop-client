@@ -2,25 +2,14 @@ import { AppBar, ListItemButton, ListItemIcon, ListItemText, Toolbar } from "@mu
 import { Home, LocalShipping, Login, Logout, ShoppingBasket, Store } from "@mui/icons-material";
 import { Link } from "react-router-dom";
 import { useState } from "react";
-import axios from "axios";
-import { useCookies } from "react-cookie";
+import { apiCall } from "../axiosConfig";
 
 export default function MenuComponent() {
   const [logged, setLogged] = useState(false);
   const [selected, setSelected] = useState(1);
-  const [cookies] = useCookies(["JSESSIONID"]);
-  axios
-    .get(`${process.env.REACT_APP_API_URL}/user/logged`, {
-      headers: {
-        "Access-Control-Allow-Origin": "*",
-        "Content-Type": "application/json",
-        "JSESSIONID": cookies.JSESSIONID
-      },
-      withCredentials: true,
-    })
-    .then((response) => {
-      setLogged(response.data);
-    });
+  apiCall.get("/user/logged").then((response) => {
+    setLogged(response.data);
+  });
   return (
     <AppBar position={"sticky"}>
       <Toolbar

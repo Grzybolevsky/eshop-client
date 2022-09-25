@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
 import { Table, TableBody, TableCell, TableHead, TableRow } from "@mui/material";
 import BasketProduct from "./BasketProduct";
+import { apiCall } from "../axiosConfig";
 
 export default function BasketPage() {
   const [basketProducts, setBasketProducts] = useState<BasketProduct[]>([]);
@@ -9,7 +9,7 @@ export default function BasketPage() {
   const [error, setError] = useState(null);
   useEffect(() => {
     setIsLoading(true);
-    axios.get(`${process.env.REACT_APP_API_URL}/basket`).then(
+    apiCall.get("/basket").then(
       (response) => {
         setBasketProducts(response.data);
         setIsLoading(false);
