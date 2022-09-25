@@ -13,12 +13,14 @@ import Product from "./Product";
 import { ChangeEvent, useEffect, useState } from "react";
 import { apiCall } from "../axiosConfig";
 import { AddShoppingCart, Home } from "@mui/icons-material";
+import { useLogged } from "../Auth/UserContext";
 
 export default function ProductsPage() {
   const [open, setOpen] = useState(false);
   const [products, setProducts] = useState<Product[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
+  const logged = useLogged();
   const emptyItem = {
     category: "",
     description: "",
@@ -67,7 +69,8 @@ export default function ProductsPage() {
         onClick={() => {
           setNewProduct(emptyItem);
           setOpen(true);
-        }}>
+        }}
+        disabled={!logged}>
         <Home />
         Dodaj przedmiot
       </Button>

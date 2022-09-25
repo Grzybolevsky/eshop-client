@@ -2,13 +2,10 @@ import { AppBar, ListItemButton, ListItemIcon, ListItemText, Toolbar } from "@mu
 import { Home, LocalShipping, Login, Logout, ShoppingBasket, Store } from "@mui/icons-material";
 import { Link } from "react-router-dom";
 import { useState } from "react";
+import { useLogged } from "../Auth/UserContext";
 
-interface MenuProps {
-  logged: boolean;
-}
-
-export default function MenuComponent(props: MenuProps) {
-  const { logged } = props;
+export default function MenuComponent() {
+  const logged = useLogged();
   const [selected, setSelected] = useState(1);
   return (
     <AppBar position={"sticky"}>
