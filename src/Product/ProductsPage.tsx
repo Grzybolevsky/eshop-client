@@ -46,7 +46,7 @@ export default function ProductsPage() {
     }));
   };
 
-  const addItem = () => {
+  const addProduct = () => {
     setOpen(false);
     apiCall.post("/products", newProduct).then((res) => setProducts([...products, res.data]));
   };
@@ -75,16 +75,12 @@ export default function ProductsPage() {
     setDetailsOpen(true);
   };
 
-  function deleteProduct(productId: number | undefined) {
+  const deleteProduct = (productId: number | undefined) => {
     apiCall.delete("/products/" + productId).then((res) => {
-      setProducts(
-        products.filter((product) => {
-          return product.id != res.data;
-        }),
-      );
+      setProducts(products.filter((product) => product.id != res.data.id));
       setDetailsOpen(false);
     });
-  }
+  };
 
   return (
     <>
@@ -137,7 +133,7 @@ export default function ProductsPage() {
           name="imageUrl"
           onChange={handleChange}
         />
-        <Button variant="outlined" onClick={addItem}>
+        <Button variant="outlined" onClick={addProduct}>
           Dodaj przedmiot
         </Button>
       </Dialog>
@@ -171,7 +167,7 @@ export default function ProductsPage() {
                   <TableCell>{product.description}</TableCell>
                   <TableCell>{product.price} PLN</TableCell>
                   <TableCell>
-                    <Button onClick={() => addItemToCart(product.id)}>
+                    <Button disabled={!logged} onClick={() => addItemToCart(product.id)}>
                       <AddShoppingCart />
                     </Button>
                   </TableCell>
