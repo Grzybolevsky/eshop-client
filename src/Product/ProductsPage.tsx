@@ -15,19 +15,23 @@ import { apiCall } from "../axiosConfig";
 import { AddShoppingCart, Home } from "@mui/icons-material";
 import { useLogged } from "../Auth/UserContext";
 
+const emptyItem = {
+  category: "",
+  description: "",
+  imageUrl: "",
+  name: "",
+  price: 0,
+};
+
 export default function ProductsPage() {
   const [open, setOpen] = useState(false);
+  const [detailsOpen, setDetailsOpen] = useState(false);
+  const [productDetails, setProductDetails] = useState<Product>(emptyItem);
   const [products, setProducts] = useState<Product[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
   const logged = useLogged();
-  const emptyItem = {
-    category: "",
-    description: "",
-    imageUrl: "",
-    name: "",
-    price: 0,
-  };
+
   const [newProduct, setNewProduct] = useState<Product>(emptyItem);
 
   const handleClose = () => {
@@ -58,8 +62,28 @@ export default function ProductsPage() {
     );
   }, []);
 
-  function addItemToCart(id?: number) {
+  const addItemToCart = (id?: number) => {
     apiCall.post("/basket/" + id).then((res) => console.log(res.data));
+  };
+
+  const handleDetailsClose = () => {
+    setDetailsOpen(false);
+  };
+
+  const openDetails = (product: Product) => {
+    setProductDetails(product);
+    setDetailsOpen(true);
+  };
+
+  function deleteProduct(productId: number | undefined) {
+    apiCall.delete("/products/" + productId).then((res) => {
+      setProducts(
+        products.filter((product) => {
+          return product.id != res.data;
+        }),
+      );
+      setDetailsOpen(false);
+    });
   }
 
   return (
@@ -118,6 +142,12 @@ export default function ProductsPage() {
         </Button>
       </Dialog>
 
+      <Dialog open={detailsOpen} onClose={handleDetailsClose}>
+        <h2>{productDetails?.name}</h2>
+        <Button disabled={!logged} onClick={() => deleteProduct(productDetails.id)}>
+          Usuń produkt
+        </Button>
+      </Dialog>
       <Table>
         <TableHead>
           <TableRow>
@@ -135,7 +165,7 @@ export default function ProductsPage() {
               products.map((product) => (
                 <TableRow key={product.id}>
                   <TableCell>
-                    <Button>{product.name}</Button>
+                    <Button onClick={() => openDetails(product)}>{product.name}</Button>
                   </TableCell>
                   <TableCell>{product.category}</TableCell>
                   <TableCell>{product.description}</TableCell>
