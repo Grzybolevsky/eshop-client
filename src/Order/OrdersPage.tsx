@@ -43,7 +43,7 @@ export default function OrdersPage() {
                   <TableCell>{order.id}</TableCell>
                   <TableCell>{order.createdAt.toString()}</TableCell>
                   <TableCell>
-                    <Button disabled={order.isPaid}>
+                    <Button disabled={order.isPaid} href={order.paymentLink} target="_blank">
                       <Payment />
                     </Button>
                   </TableCell>

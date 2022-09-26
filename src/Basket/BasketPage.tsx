@@ -17,7 +17,6 @@ export default function BasketPage() {
   const [basketProducts, setBasketProducts] = useState<BasketProduct[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [dialogOpen, setDialogOpen] = useState(false);
-  const [totalPrice, setTotalPrice] = useState(0);
   const [error, setError] = useState(null);
   useEffect(() => {
     setIsLoading(true);
@@ -92,32 +91,29 @@ export default function BasketPage() {
           {isLoading
             ? "Loading..."
             : !error &&
-              basketProducts.map((basketProduct) => {
-                setTotalPrice(totalPrice + basketProduct.totalPrice);
-                return (
-                  <TableRow key={basketProduct.id}>
-                    <TableCell>{basketProduct.product.name}</TableCell>
-                    <TableCell>
-                      <TextField
-                        id="standard-basic"
-                        label="Liczba"
-                        variant="standard"
-                        name="quantity"
-                        type="number"
-                        InputProps={{ inputProps: { min: 1 } }}
-                        onChange={(e) => handleChange(e, basketProduct)}
-                        value={basketProduct.quantity}
-                      />
-                    </TableCell>
-                    <TableCell>{basketProduct.totalPrice}</TableCell>
-                    <TableCell>
-                      <Button onClick={() => removeItemFromCart(basketProduct.id)}>
-                        <AddShoppingCart />
-                      </Button>
-                    </TableCell>
-                  </TableRow>
-                );
-              })}
+              basketProducts.map((basketProduct) => (
+                <TableRow key={basketProduct.id}>
+                  <TableCell>{basketProduct.product.name}</TableCell>
+                  <TableCell>
+                    <TextField
+                      id="standard-basic"
+                      label="Liczba"
+                      variant="standard"
+                      name="quantity"
+                      type="number"
+                      InputProps={{ inputProps: { min: 1 } }}
+                      onChange={(e) => handleChange(e, basketProduct)}
+                      value={basketProduct.quantity}
+                    />
+                  </TableCell>
+                  <TableCell>{basketProduct.totalPrice}</TableCell>
+                  <TableCell>
+                    <Button onClick={() => removeItemFromCart(basketProduct.id)}>
+                      <AddShoppingCart />
+                    </Button>
+                  </TableCell>
+                </TableRow>
+              ))}
         </TableBody>
       </Table>
       <Dialog open={dialogOpen} onClose={handleDialogClose}>
