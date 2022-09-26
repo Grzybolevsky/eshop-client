@@ -139,7 +139,10 @@ export default function ProductsPage() {
       </Dialog>
 
       <Dialog open={detailsOpen} onClose={handleDetailsClose}>
+        <img src={productDetails?.imageUrl} alt={"cannot fetch image"}/>
         <h2>{productDetails?.name}</h2>
+        <h3>Kategoria: {productDetails?.category}</h3>
+        <a>{productDetails?.description}</a>
         <Button disabled={!logged} onClick={() => deleteProduct(productDetails.id)}>
           Usuń produkt
         </Button>
