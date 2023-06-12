@@ -15,7 +15,7 @@
     "react-redux": "^8.0.5",
     "react-router-dom": "^6.8.1",
     "react-scripts": "^5.1.0-next.14",
-    "react-social-login-buttons": "^3.6.1",
+    "react-social-login-buttons": "^3.9.1",
     "web-vitals": "^3.1.1"
   },
   "devDependencies": {
